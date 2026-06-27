@@ -30,7 +30,11 @@ COPY --from=prepare /app/out/full/ .
 
 RUN bun turbo build
 
+FROM mwader/static-ffmpeg:latest AS ffmpeg
+
 FROM oven/bun:latest AS runner
+COPY --from=ffmpeg /ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg /ffprobe /usr/local/bin/ffprobe
 WORKDIR /app
 
 COPY --from=builder /app .
