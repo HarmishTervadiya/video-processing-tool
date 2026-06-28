@@ -22,6 +22,11 @@ services:
       - REDIS_PORT=6379
     volumes:
       - ./media:/app/media
+      - .:/app
+      - /app/node_modules
+      - /app/apps/api/node_modules
+      - /app/apps/web/node_modules
+    command: bun --watch run apps/api/src/index.ts
     depends_on:
       - redis
     networks:
